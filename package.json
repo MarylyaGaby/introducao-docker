@@ -1,0 +1,31 @@
+{
+  "name": "introducao-docker",
+  "version": "1.0.0",
+  "description": "introducao-docker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarylyaGaby/introducao-docker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarylyaGaby/introducao-docker/issues"
+  },
+  "homepage": "https://github.com/MarylyaGaby/introducao-docker#readme",
+  "devDependencies": {
+    "prisma": "^6.14.0"
+  },
+  "dependencies": {
+    "@nestjs/mapped-types": "^2.1.0",
+    "@nestjs/swagger": "^11.2.0",
+    "@prisma/client": "^6.14.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
