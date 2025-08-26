@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { BookService } from "./book.service";
 import { CreateBookDto } from "./dto/create-book.dto";
-import { ApiOperation, ApiResponse } from "@nestjs/swagger";
+import { ApiOperation, ApiResponse, ApiParam } from "@nestjs/swagger";
 import { UpdateBookDto } from "./dto/update-book.dto";
 
-@Controller()
+@Controller("books")
 export class BookController {
     constructor(private readonly bookService: BookService) { }
 
@@ -34,10 +34,11 @@ export class BookController {
 
     @Put(':id')
     @ApiOperation({ summary: 'Atualizar um livro por ID' })
+    @ApiParam({ name: 'id', type: String, description: 'ID do livro' }) // 👈 aqui
     @ApiResponse({ status: 200, description: 'Livro atualizado com sucesso.' })
     @ApiResponse({ status: 400, description: 'Dados inválidos.' })
     @ApiResponse({ status: 404, description: 'Livro não encontrado.' })
-    update(@Body('id') id: string, @Body() data: UpdateBookDto) {
+    update(@Param('id') id: string, @Body() data: UpdateBookDto) {
         return this.bookService.update(id, data);
     }
 
