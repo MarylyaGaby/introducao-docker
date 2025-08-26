@@ -31,3 +31,18 @@ enum BookCategory {
   INFANTIL
   RELIGIOSO
 }
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String?
+  googleId String? @unique
+  role UserRole @default(COMUM)
+}
+
+enum UserRole {
+  ADMIN
+  COMUM
+}
+
