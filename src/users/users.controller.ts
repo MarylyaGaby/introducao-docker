@@ -8,6 +8,7 @@ import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags, ApiParam } 
 
 
 @ApiTags('users')
+
 @ApiBearerAuth()
 @Controller('users')
 export class UsersController {
