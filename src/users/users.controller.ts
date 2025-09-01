@@ -5,19 +5,19 @@ import { UpdateUserDto } from './dto/create-user.dto';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags, ApiParam } from "@nestjs/swagger";
 import { AdminGuard } from "../auth/admin.guard";
 import { JwtAuthGuard } from "../auth/jwt.guard";
-
+import { ComumGuard } from "../auth/comum.guard";
 
 
 
 @ApiTags('users')
-@UseGuards(AdminGuard)
+//@UseGuards(AdminGuard)
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
-
+    @UseGuards(ComumGuard)
     @Post() // Rota Cria Usuário
     @ApiOperation({ summary: 'Criar um novo usuário' })
     @ApiBody({ type: CreateUserDto })
@@ -27,8 +27,7 @@ export class UsersController {
     create(@Body() data: CreateUserDto) {
         return this.usersService.create(data);
     }
-
-
+    @UseGuards(AdminGuard)
     @ApiOperation({ summary: 'Listar todos os usuários' })
     @ApiResponse({
         status: 200,
@@ -39,6 +38,7 @@ export class UsersController {
         return this.usersService.findAll()
     }
 
+    @UseGuards(AdminGuard)
     @Get(':id')  // Buscar o usuario pelo ID
     @ApiOperation({ summary: 'Buscar um usuário por ID' })
     @ApiResponse({
@@ -57,6 +57,7 @@ export class UsersController {
         return this.usersService.findOne(id)
     }
 
+    @UseGuards(AdminGuard)
     @Put(':id')
     @ApiOperation({ summary: 'Atualizar um usuário' })
     @ApiResponse({
@@ -72,6 +73,7 @@ export class UsersController {
         return this.usersService.update(id, data)
     }
 
+    @UseGuards(AdminGuard)
     @Delete(':id')
     @ApiOperation({ summary: 'Remover um usuário' })
     @ApiResponse({

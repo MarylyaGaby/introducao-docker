@@ -3,17 +3,19 @@ import { BookService } from "./book.service";
 import { CreateBookDto } from "./dto/create-book.dto";
 import { ApiOperation, ApiResponse, ApiParam, ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { UpdateBookDto } from "./dto/update-book.dto";
+import { AdminGuard } from "../auth/admin.guard";
 import { JwtAuthGuard } from "../auth/jwt.guard";
 import { ComumGuard } from "../auth/comum.guard";
 
-@UseGuards(ComumGuard)
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 @ApiTags("books")
 @Controller("books")
 export class BookController {
     constructor(private readonly bookService: BookService) { }
+    @UseGuards(JwtAuthGuard)
 
+    @UseGuards(AdminGuard)
     @Post()
     @ApiOperation({ summary: 'Criar um novo livro' })
     @ApiResponse({ status: 201, description: 'Livro criado com sucesso.' })
@@ -22,6 +24,7 @@ export class BookController {
         return this.bookService.create(data);
     }
 
+    @UseGuards(ComumGuard)
     @Get()
     @ApiOperation({ summary: 'Listar todos os livros' })
     @ApiResponse({ status: 200, description: 'Lista de livros retornada com sucesso.' })
@@ -30,6 +33,7 @@ export class BookController {
         return this.bookService.findAll();
     }
 
+    @UseGuards(ComumGuard)
     @Get(':id')
     @ApiOperation({ summary: 'Obter um livro por ID' })
     @ApiResponse({ status: 200, description: 'Livro encontrado com sucesso.' })
@@ -38,6 +42,7 @@ export class BookController {
         return this.bookService.findById(id);
     }
 
+    @UseGuards(AdminGuard)
     @Put(':id')
     @ApiOperation({ summary: 'Atualizar um livro por ID' })
     @ApiParam({ name: 'id', type: String, description: 'ID do livro' }) // 👈 aqui
@@ -48,6 +53,7 @@ export class BookController {
         return this.bookService.update(id, data);
     }
 
+    @UseGuards(AdminGuard)
     @Delete(':id')
     @ApiOperation({ summary: 'Deletar um livro por ID' })
     @ApiResponse({ status: 200, description: 'Livro deletado com sucesso.' })
