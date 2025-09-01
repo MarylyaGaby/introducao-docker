@@ -9,8 +9,8 @@ import { ComumGuard } from "../auth/comum.guard";
 
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
-@ApiTags("/books")
-@Controller("/books")
+@ApiTags("books")
+@Controller("books")
 export class BookController {
     constructor(private readonly bookService: BookService) { }
     @UseGuards(JwtAuthGuard)
