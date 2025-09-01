@@ -3,8 +3,8 @@ import { BookService } from "./book.service";
 import { CreateBookDto } from "./dto/create-book.dto";
 import { ApiOperation, ApiResponse, ApiParam, ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { UpdateBookDto } from "./dto/update-book.dto";
-import { JwtAuthGuard } from "src/auth/jwt.guard";
-import { ComumGuard } from "src/auth/comum.guard";
+import { JwtAuthGuard } from "../auth/jwt.guard";
+import { ComumGuard } from "../auth/comum.guard";
 
 @UseGuards(ComumGuard)
 @UseGuards(JwtAuthGuard)
