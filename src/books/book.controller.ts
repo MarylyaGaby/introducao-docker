@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put , UseGuards} from "@nestjs/common";
 import { BookService } from "./book.service";
 import { CreateBookDto } from "./dto/create-book.dto";
-import { ApiOperation, ApiResponse, ApiParam, ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiResponse, ApiParam, ApiBearerAuth, ApiTags, ApiBody } from "@nestjs/swagger";
 import { UpdateBookDto } from "./dto/update-book.dto";
 import { AdminGuard } from "../auth/admin.guard";
 import { JwtAuthGuard } from "../auth/jwt.guard";
@@ -18,10 +18,27 @@ export class BookController {
     @UseGuards(AdminGuard)
     @Post()
     @ApiOperation({ summary: 'Criar um novo livro' })
+    @ApiBody({
+      description: 'Formulário de criação de Livro',
+      schema: {
+        type: 'object',
+        required: ['title', 'author'],
+        properties: {
+          title: { type: 'string', example: 'Dom Casmurro' },
+          author: { type: 'string', example: 'Machado de Assis' },
+          publicationDate: { type: 'string', example: '1899-01-01' },
+          category: { 
+            type: 'string', 
+            enum: ['ROMANCE', 'FANTASIA', 'SUSPENSE', 'TERROR', 'BIOGRAFIA', 'INFANTIL', 'RELIGIOSO'],
+            example: 'ROMANCE'
+          },
+        },
+      },
+    })
     @ApiResponse({ status: 201, description: 'Livro criado com sucesso.' })
     @ApiResponse({ status: 400, description: 'Dados inválidos.' })
     create(@Body() data: CreateBookDto) {
-        return this.bookService.create(data);
+      return this.bookService.create(data);
     }
 
     @UseGuards(ComumGuard)
@@ -45,13 +62,30 @@ export class BookController {
     @UseGuards(AdminGuard)
     @Put(':id')
     @ApiOperation({ summary: 'Atualizar um livro por ID' })
-    @ApiParam({ name: 'id', type: String, description: 'ID do livro' }) // 👈 aqui
+    @ApiParam({ name: 'id', type: String, description: 'ID do livro' })
+    @ApiBody({
+      description: 'Formulário de atualização de Livro',
+      schema: {
+        type: 'object',
+        properties: {
+          title: { type: 'string', example: 'O Pequeno Príncipe' },
+          author: { type: 'string', example: 'Antoine de Saint-Exupéry' },
+          publicationDate: { type: 'string', example: '1943-04-06' },
+          category: { 
+            type: 'string', 
+            enum: ['ROMANCE', 'FANTASIA', 'SUSPENSE', 'TERROR', 'BIOGRAFIA', 'INFANTIL', 'RELIGIOSO'],
+            example: 'ROMANCE'
+          },
+       },
+     },
+    })
     @ApiResponse({ status: 200, description: 'Livro atualizado com sucesso.' })
     @ApiResponse({ status: 400, description: 'Dados inválidos.' })
     @ApiResponse({ status: 404, description: 'Livro não encontrado.' })
     update(@Param('id') id: string, @Body() data: UpdateBookDto) {
-        return this.bookService.update(id, data);
-    }
+    return this.bookService.update(id, data);
+  }
+
 
     @UseGuards(AdminGuard)
     @Delete(':id')
