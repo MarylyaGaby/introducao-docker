@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateBookDto } from "./dto/create-book.dto";
 import { UpdateBookDto } from "./dto/update-book.dto";
@@ -60,10 +60,8 @@ export class BookService {
                 },
             });
         } catch {
-            throw new NotFoundException(`
-
-                Livro com id ${id} não identificado
-                
+            throw new BadRequestException(`
+                Dados Inválidos! Erro ao buscar na base de dados.
                 `)
         }
     }
