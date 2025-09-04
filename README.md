@@ -67,3 +67,7 @@ npm run start:cov
 - CRUD completo implementado e conectado ao PostgreSQL.  
 - Código simples, feito para praticar Docker e NestJS.  
 - 🚀 Docker e Swagger permitem testar rapidamente os endpoints.
+
+  ### Autores
+  | [<img loading="lazy" widht= 150 height= 150 src="https://avatars.githubusercontent.com/u/206598617?s=400&u=d9adef8619d875edaf2922f53f89632bf4581380&v=4" widht=50><br><sub>Marília Gabriele</sub>](https://github.com/MarylyaGaby) 
+| :---: |
