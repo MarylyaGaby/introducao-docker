@@ -17,7 +17,7 @@ import { ComumGuard } from "../auth/comum.guard";
 export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
-    @UseGuards(ComumGuard)
+    @UseGuards(AdminGuard)
     @Post() // Rota Cria Usuário
     @ApiOperation({ summary: 'Criar um novo usuário' })
     @ApiBody({ type: CreateUserDto })
