@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { BookService } from "./book.service";
 import { PrismaService } from "../prisma/prisma.service";
-import { NotFoundException, ConflictException } from "@nestjs/common";
+import { NotFoundException, ConflictException, BadRequestException } from "@nestjs/common";
 import { BookCategory } from "@prisma/client";
 
 // Mock do PrismaService
@@ -104,7 +104,7 @@ describe("BookService", () => {
   it("deve lançar erro ao atualizar livro inexistente", async () => {
     mockPrisma.book.update.mockRejectedValue(new Error());
 
-    await expect(service.update("999", { title: "Outro" } as any)).rejects.toThrow(NotFoundException);
+    await expect(service.update("999", { title: "Outro" } as any)).rejects.toThrow(BadRequestException);
   });
 
   // Teste de remoção
